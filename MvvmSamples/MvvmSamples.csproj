@@ -58,9 +58,19 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\IViewModel.cs" />
+    <Compile Include="Core\CommandBase.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
+    <Compile Include="DataBinding\DataBindingViewModel.cs" />
+    <Compile Include="DataBinding\View\DataBindingView.xaml.cs">
+      <DependentUpon>DataBindingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Command\ShowDataBindingViewCommand.cs" />
+    <Page Include="DataBinding\View\DataBindingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
