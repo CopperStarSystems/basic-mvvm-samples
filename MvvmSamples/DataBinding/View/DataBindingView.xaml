@@ -1,12 +1,365 @@
-﻿<Window x:Class="MvvmSamples.DataBinding.View.DataBindingView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MvvmSamples.DataBinding.View"
-        mc:Ignorable="d"
-        Title="DataBindingView" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
-</Window>
+﻿<UserControl x:Class="MvvmSamples.DataBinding.View.DataBindingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:MvvmSamples.DataBinding.View"
+             mc:Ignorable="d"
+             d:DesignWidth="600"
+             Background="AliceBlue"
+             d:DesignHeight="1200">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
+
+        <Style TargetType="{x:Type ComboBox}">
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="TitleBlockStyle" BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="24" />
+        </Style>
+
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Margin" Value="5 10 5 0" />
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Style="{StaticResource TitleBlockStyle}" Text="Simple Binding Examples" />
+            <StackPanel Grid.Row="1">
+                <TextBlock FontWeight="Bold">Simple Binding Example</TextBlock>
+                <TextBlock>
+                    Type some text in the textbox below, then click away from the TextBox.  The TextBox is bound to the ViewModel's SimpleBindingExample property.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap">
+                    When the TextBox loses focus (this is the default behavior for TextBoxes), the ViewModel value is updated and the ViewModel fires the PropertyChanged event.  Behind the scenes, the WPF Binding subsystem listens for this event and updates the UI when it fires.
+                </TextBlock>
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Input Text" />
+                    <Label Grid.Row="0" Grid.Column="1" Content="Value in ViewModel" />
+                    <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding SimpleBindingExample}" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding SimpleBindingExample}" />
+                </Grid>
+            </StackPanel>
+
+            <StackPanel Grid.Row="2">
+                <TextBlock FontWeight="Bold">
+                    UpdateSourceTrigger Example
+                </TextBlock>
+                <TextBlock>
+                    Type some text in the textbox below.  The TextBox is bound to the ViewModel's SimpleBindingExample property.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap">
+                    When the TextBox text changes, the ViewModel value is updated and the ViewModel fires the PropertyChanged event.  Behind the scenes, the WPF Binding subsystem listens for this event and updates the UI when it fires.
+
+                    The difference between this example and the one above is the UpdateSourceTrigger attribute applied to the binding.  This overrides the default TextBox behavior to update the ViewModel for every character typed.
+                </TextBlock>
+
+                <TextBlock TextWrapping="Wrap">
+                    In a nutshell, we can use UpdateSourceTrigger to fine-tune when our UI components communicate changes to the ViewModel layer.
+                </TextBlock>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="Input Text" />
+                    <Label Grid.Row="0" Grid.Column="1" Content="Value in ViewModel" />
+                    <TextBox Grid.Row="1" Grid.Column="0"
+                             Text="{Binding UpdateSourceTriggerExample, UpdateSourceTrigger=PropertyChanged}" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding UpdateSourceTriggerExample}" />
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="3">
+                <TextBlock Style="{StaticResource TitleBlockStyle}">
+                    Binding to Collections and Lists
+                </TextBlock>
+                <TextBlock>
+                    For list-based controls (i.e. ListBox, ComboBox, TreeView, etc.), we use the ItemsSource property to bind the View to the list property on the ViewModel.
+                </TextBlock>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Grid.Row="0" Grid.Column="0" Content="ComboBox" />
+                    <Label Grid.Row="0" Grid.Column="1" Content="ListBox" />
+                    <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding BasicItemsSourceExample}" />
+                    <ListBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding BasicItemsSourceExample}" />
+                </Grid>
+
+                <TextBlock FontWeight="Bold">
+                    Tracking the Selected Item
+                </TextBlock>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock>
+                            List controls also support the concept of a "Selected Item", which can also be bound to a property on the ViewModel.
+                        </TextBlock>
+                        <TextBlock>Since both controls below have their SelectedItem bound to the SelectedString property, when you select an item in one control, the other control automatically updates to reflect the new selection.</TextBlock>
+                    </StackPanel>
+                    <Label Grid.Row="1" Grid.Column="0" Content="ComboBox" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="ListBox" />
+                    <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding BasicItemsSourceExample}"
+                              SelectedItem="{Binding SelectedString}" />
+                    <ListBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding BasicItemsSourceExample}"
+                             SelectedItem="{Binding SelectedString}" />
+                </Grid>
+
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Style="{StaticResource TitleBlockStyle}">
+                            Master-Detail Scenarios
+                        </TextBlock>
+                        <TextBlock>
+                            MVVM and binding make it easy to implement Master/Detail scenarios using ItemsControl and
+                            the concept of a SelectedItem:
+                        </TextBlock>
+                    </StackPanel>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Select a Person" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="ListBox" />
+                    <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding People}"
+                              SelectedItem="{Binding SelectedPerson}" />
+                    <Grid Grid.Row="2" Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="First Name:" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Last Name:" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Birthdate:" />
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding SelectedPerson.FirstName}" />
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding SelectedPerson.LastName}" />
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedPerson.BirthDate}" />
+                    </Grid>
+                </Grid>
+
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Style="{StaticResource TitleBlockStyle}">
+                            Local Data Contexts
+                        </TextBlock>
+                        <TextBlock>
+                            It's also possible to override the inherited DataContext by setting it explicitly.
+                            This can alleviate ugly XAML code when accessing sub-properties of the root
+                            DataContext.
+                        </TextBlock>
+                    </StackPanel>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Select a Person" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="ListBox" />
+
+
+                    <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding People}"
+                              SelectedItem="{Binding LocalSelectedPerson}" />
+
+                    <!-- Note that we're assigning the Grid's DataContext explicitly below.
+                    This has two effects: 
+                    1:  It overrides the DataContext inherited from the parent Window (of type DataBindingViewModel),
+                    instead setting it to the SelectedPerson property (of type PersonViewModel)
+                    
+                    2:  All controls contained by this Grid will inherit the Grid's DataContext -->
+                    <Grid Grid.Row="2" Grid.Column="1" DataContext="{Binding LocalSelectedPerson}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="First Name:" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Last Name:" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Birthdate:" />
+                        <!-- We do not need a full binding path (the Person part of {Binding SelectedPerson.XXX}) 
+                        because our local DataContext is SelectedPerson. -->
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding FirstName}" />
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding LastName}" />
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding BirthDate}" />
+                        <!-- Important Note:  The following line of code will not work in this context because
+                        our local DataContext is bound to SelectedPersonViewModel (which does not have a 
+                        SelectedPerson property of its own) instead of DataBindingViewModel 
+                        like the rest of this window.-->
+                        <!--<DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding SelectedPerson.BirthDate}"/>-->
+                    </Grid>
+                </Grid>
+
+                
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock Style="{StaticResource TitleBlockStyle}">
+                            Relative Sources
+                        </TextBlock>
+                        <TextBlock>
+                            Binding data doesn't necessarily have to come from the DataContext.  It is also possible to bind to other elements in the UI Tree using ElementName and FindAncestor bindings:
+                        </TextBlock>
+                        <TextBlock FontWeight="Bold">
+                            ElementName + Path Binding
+                        </TextBlock>
+                        <!--<TextBlock>Since both controls below have their SelectedItem bound to the SelectedString property, when you select an item in one control, the other control automatically updates to reflect the new selection.</TextBlock>-->
+                    </StackPanel>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Select a Person" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="ListBox" />
+
+
+                    <ComboBox Grid.Row="2" Grid.Column="0" ItemsSource="{Binding People}" x:Name="PersonSelector" />
+
+                    <!-- We're using the same Local Data Context approach as above, but this time instead of binding it to a
+                    ViewModel property, we're binding it to a property on the ComboBox named "PersonSelector".
+                    
+                    The binding expression effectively says "Go find the UI Element in this visual tree that is named 'PersonSelector'
+                    and use the value of its 'SelectedItem' property as the local DataContext
+                    for this Grid."
+                    -->
+                    <Grid Grid.Row="2" Grid.Column="1"
+                          DataContext="{Binding ElementName=PersonSelector, Path=SelectedItem}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Content="First Name:" />
+                        <Label Grid.Row="1" Grid.Column="0" Content="Last Name:" />
+                        <Label Grid.Row="2" Grid.Column="0" Content="Birthdate:" />
+
+                        <Label Grid.Row="0" Grid.Column="1" Content="{Binding FirstName}" />
+                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding LastName}" />
+                        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding BirthDate}" />
+                    </Grid>
+                </Grid>
+
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2">
+                        <TextBlock FontWeight="Bold">
+                            RelativeSource FindAncestor
+                        </TextBlock>
+                    </StackPanel>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="Form Width" />
+                    <Label Grid.Row="1" Grid.Column="1" Content="Form Height" />
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="Parent Grid Width" />
+                    <TextBlock Grid.Row="3" Grid.Column="1"
+                               Text="Parent Grid Height (does not change - the grid automatically sizes to its content height and the content's height is constant at runtime.)" />
+                    <!-- When using RelativeSource FindAncestor, we have to specify the AncestorType
+                    and also the name of the property to bind to (via the Path part of the binding expression).
+                    In this case, we're binding to the parent window's ActualWidth and ActualHeight properties
+                    respectively. -->
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualWidth}" />
+                    <TextBlock Grid.Row="2" Grid.Column="1"
+                               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=ActualHeight}" />
+                    <!-- When using FindAncestor, we can bind to any elements in our current UI tree, for example our
+                    parent container.  This can be useful when creating custom UI controls. -->
+                    <TextBlock Grid.Row="4" Grid.Column="0"
+                               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}" />
+                    <TextBlock Grid.Row="4" Grid.Column="1"
+                               Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualHeight}" />
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+
+
+</UserControl>

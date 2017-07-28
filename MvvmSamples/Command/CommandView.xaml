@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="MvvmSamples.Command.CommandView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MvvmSamples.Command"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Command Invocation Count:" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding CountInvocationsCommand.InvocationCount}" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Invoke Command" Command="{Binding CountInvocationsCommand}" />
+            <Menu Grid.Row="2" Grid.Column="0">
+                <Menu.Items>
+                    <MenuItem Header="Invoke Command" Command="{Binding CountInvocationsCommand}" />
+                </Menu.Items>
+            </Menu>
+            <TextBlock Grid.Row="3" Grid.Column="0">
+                <Hyperlink Command="{Binding CountInvocationsCommand}">Invoke Command</Hyperlink>
+            </TextBlock>
+        </Grid>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Most Recent CommandParameter:" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding WithParameterCommand.MostRecentCommandParameter, Mode=OneWay}" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Invoke Command" Command="{Binding WithParameterCommand}" CommandParameter="Invoked from Button." />
+            <Menu Grid.Row="2" Grid.Column="0">
+                <Menu.Items>
+                    <MenuItem Header="Invoke Command" Command="{Binding WithParameterCommand}" CommandParameter="Invoked from MenuItem." />
+                </Menu.Items>
+            </Menu>
+            <TextBlock Grid.Row="3" Grid.Column="0">
+                <Hyperlink Command="{Binding WithParameterCommand}" CommandParameter="Invoked from Hyperlink.">Invoke Command</Hyperlink>
+            </TextBlock>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Allow CanExecuteCommand to Execute:" />
+            <CheckBox Grid.Row="0" Grid.Column="1" IsChecked="{Binding AllowCanExecuteCommandToExecute}" />
+            <Button Grid.Row="1" Grid.Column="0" Content="Invoke Command" Command="{Binding CanExecuteCommand}" CommandParameter="Invoked from Button." />
+            <Menu Grid.Row="2" Grid.Column="0">
+                <Menu.Items>
+                    <MenuItem Header="Invoke Command" Command="{Binding CanExecuteCommand}" CommandParameter="Invoked from MenuItem." />
+                </Menu.Items>
+            </Menu>
+            <TextBlock Grid.Row="3" Grid.Column="0">
+                <Hyperlink Command="{Binding CanExecuteCommand}" CommandParameter="Invoked from Hyperlink.">Invoke Command</Hyperlink>
+            </TextBlock>
+        </Grid>
+    </StackPanel>
+
+</UserControl>

@@ -1,0 +1,123 @@
+﻿<UserControl x:Class="MvvmSamples.DataTemplating.View.DataTemplatingView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MvvmSamples.DataTemplating.View"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:model="clr-namespace:MvvmSamples.Model"
+             xmlns:dataTemplating="clr-namespace:MvvmSamples.DataTemplating"
+             mc:Ignorable="d"
+             Background="AliceBlue">
+    <UserControl.Resources>
+        <dataTemplating:ParameterListDataTemplateSelector x:Key="ParameterListDataTemplateSelector" />
+    </UserControl.Resources>
+    <ScrollViewer>
+        <Grid>
+            <StackPanel>
+                <TextBlock Text="Data Templating Overview" />
+                <StackPanel>
+                    <TextBlock TextWrapping="Wrap">
+                        Data Templates enable WPF engineers to specify different visual representations for different types.  These templates are particularly handy with ItemsControls:
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap" Margin="0 10 0 0">
+                        An ItemsControl can be bound to any list property via its ItemsSource property.  If no DataTemplate is defined, the ListBox will use the string representation of the item's underlying object.  Internally, this is accomplished by calling ToString() on the list item.  The Parameter classes in this example do not override ToString, so the ListBox shows the default, which displays the Type name:
+                    </TextBlock>
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Parameters}" />
+                    </Grid>
+
+                    <TextBlock TextWrapping="Wrap">
+                        We can specify different representations for different types by specifying DataTemplates as resources in the ListBox.
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                        Each DataTemplate targets a specific type (for example System.string, or System.DateTime) and specifies a XAML template for rendering that type in the list:
+                    </TextBlock>
+                    <Grid>
+                        <ListBox ItemsSource="{Binding SimpleItemProperties}" MaxHeight="400">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type system:String}">
+                                    <Border BorderThickness="5" Background="Aquamarine" CornerRadius="10" Padding="10">
+                                        <StackPanel>
+                                            <TextBlock Text="[Text]" />
+                                            <TextBox Text="{Binding Mode=OneWay}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type system:DateTime}">
+                                    <Border BorderThickness="5" Background="LightCoral" CornerRadius="10" Padding="10">
+                                        <StackPanel>
+                                            <TextBlock Text="[DateTime]" />
+                                            <DatePicker SelectedDate="{Binding Mode=OneWay}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type system:Int32}">
+                                    <Border BorderThickness="5" Background="DarkGoldenrod" CornerRadius="10"
+                                            Padding="10">
+                                        <StackPanel>
+                                            <TextBlock Text="[Numeric]" />
+                                            <TextBlock Background="BlueViolet" Text="{Binding Mode=OneWay}" />
+                                        </StackPanel>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Grid>
+
+                    <TextBlock TextWrapping="Wrap">
+                        It's also possible to create templates for your custom types:
+                    </TextBlock>
+
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Parameters}" HorizontalContentAlignment="Stretch">
+                            <ListBox.Resources>
+                                <DataTemplate DataType="{x:Type model:NumericRangedParameter}">
+                                    <DockPanel>
+                                        <TextBlock Text="Numeric Ranged Editor:" DockPanel.Dock="Left" />
+                                        <TextBlock Text="{Binding Value}" DockPanel.Dock="Right" />
+                                        <StackPanel DockPanel.Dock="Left" Margin="0 0 50 0">
+                                            <DockPanel>
+                                                <TextBlock DockPanel.Dock="Left" Text="{Binding MinValue}" />
+                                                <TextBlock DockPanel.Dock="Right" Text="{Binding MaxValue}" />
+                                                <Slider Minimum="{Binding MinValue}" Maximum="{Binding MaxValue}"
+                                                        Value="{Binding Value}" />
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:DateTimeParameter}">
+                                    <DockPanel>
+                                        <TextBlock Text="DateTime Editor:" DockPanel.Dock="Left" />
+                                        <TextBlock Text="{Binding Value}" DockPanel.Dock="Right" />
+                                        <DatePicker SelectedDate="{Binding Value}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:TextParameter}">
+                                    <DockPanel>
+                                        <TextBlock Text="Text Editor:" DockPanel.Dock="Left" />
+                                        <TextBlock Text="{Binding Value}" DockPanel.Dock="Right" />
+                                        <TextBox Text="{Binding Value, UpdateSourceTrigger=PropertyChanged}" />
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Grid>
+
+                    <Grid>
+                        <ListBox ItemsSource="{Binding Parameters}"
+                                 ItemTemplateSelector="{StaticResource ParameterListDataTemplateSelector}"
+                                 HorizontalContentAlignment="Stretch">
+                            <!-- DataTemplates can also be stored in external Resource files both for reuse and to keep
+                            this file a little bit cleaner. -->
+                            <ListBox.Resources>
+                                <ResourceDictionary
+                                    Source="/MvvmSamples;component/Resources/DataTemplatingExternalTemplatesExample.xaml" />
+                            </ListBox.Resources>
+                        </ListBox>
+                    </Grid>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

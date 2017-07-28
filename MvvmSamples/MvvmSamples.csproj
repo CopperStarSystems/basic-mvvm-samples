@@ -57,17 +57,64 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedBehaviors\AttachedBehaviorsView.xaml.cs">
+      <DependentUpon>AttachedBehaviorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Command\CanExecuteCommand.cs" />
+    <Compile Include="Command\CommandView.xaml.cs">
+      <DependentUpon>CommandView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Command\CommandViewModel.cs" />
+    <Compile Include="Command\CountInvocationsCommand.cs" />
+    <Compile Include="Command\WithParameterCommand.cs" />
     <Compile Include="Core\IViewModel.cs" />
     <Compile Include="Core\CommandBase.cs" />
     <Compile Include="Core\ViewModelBase.cs" />
     <Compile Include="DataBinding\DataBindingViewModel.cs" />
+    <Compile Include="DataBinding\PersonViewModel.cs" />
     <Compile Include="DataBinding\View\DataBindingView.xaml.cs">
       <DependentUpon>DataBindingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataTemplating\DataTemplatingViewModel.cs" />
+    <Compile Include="DataTemplating\ParameterListDataTemplateSelector.cs" />
+    <Compile Include="DataTemplating\View\DataTemplatingView.xaml.cs">
+      <DependentUpon>DataTemplatingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ListDataBinding\ListDataBindingViewModel.cs" />
+    <Compile Include="ListDataBinding\View\ListDataBindingView.xaml.cs">
+      <DependentUpon>ListDataBindingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\DateTimeParameter.cs" />
+    <Compile Include="Model\NumericRangedParameter.cs" />
+    <Compile Include="Model\ParameterBase.cs" />
+    <Compile Include="Model\TextParameter.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ValueConverters\BooleanToIntegerConverter.cs" />
+    <Compile Include="ValueConverters\BooleanToYesNoStringConverter.cs" />
+    <Compile Include="ValueConverters\StringToSortedCharactersConverter.cs" />
+    <Compile Include="ValueConverters\StringToUppercaseConverter.cs" />
+    <Compile Include="ValueConverters\ValueConvertersView.xaml.cs">
+      <DependentUpon>ValueConvertersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueConverters\ValueConvertersViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Command\ShowDataBindingViewCommand.cs" />
+    <Page Include="AttachedBehaviors\AttachedBehaviorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Command\CommandView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DataBinding\View\DataBindingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataTemplating\View\DataTemplatingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ListDataBinding\View\ListDataBindingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -83,6 +130,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Resource Include="Resources\DataTemplatingExternalTemplatesExample.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
+    <Page Include="ValueConverters\ValueConvertersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -113,7 +168,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="ViewModel\Command\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

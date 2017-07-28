@@ -4,11 +4,42 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MvvmSamples"
+        xmlns:dataBinding="clr-namespace:MvvmSamples.DataBinding.View"
+        xmlns:dataTemplating="clr-namespace:MvvmSamples.DataTemplating.View"
+        xmlns:command="clr-namespace:MvvmSamples.Command"
+        xmlns:attachedBehaviors="clr-namespace:MvvmSamples.AttachedBehaviors"
+        xmlns:valueConverters="clr-namespace:MvvmSamples.ValueConverters"
+        xmlns:listDataBinding="clr-namespace:MvvmSamples.ListDataBinding.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <StackPanel>
-            <Button Command="{Binding ShowDataBindingViewCommand}" Content="Data Binding Example"/>
-        </StackPanel>
+        <TabControl>
+            <TabItem Header="Simple Data Binding" DataContext="{Binding DataBindingViewModel}">
+                <dataBinding:DataBindingView />
+            </TabItem>
+            <TabItem Header="Data Binding to Lists" DataContext="{Binding ListDataBindingViewModel}">
+                <listDataBinding:ListDataBindingView/>
+            </TabItem>
+            <TabItem Header="Data Templating" DataContext="{Binding DataTemplatingViewModel}">
+                <dataTemplating:DataTemplatingView />
+            </TabItem>
+            <TabItem Header="Commands" DataContext="{Binding CommandViewModel}">
+                <command:CommandView />
+            </TabItem>
+            <TabItem Header="ValueConverters" DataContext="{Binding ValueConvertersViewModel}">
+                <valueConverters:ValueConvertersView />
+            </TabItem>
+            <TabItem Visibility="Collapsed">
+                <TabItem.Header>
+                    <StackPanel>
+                        <TextBlock Text="Handling UI Events" />
+                        <TextBlock Text="with Attached Behaviors" />
+                    </StackPanel>
+                </TabItem.Header>
+                <attachedBehaviors:AttachedBehaviorsView />
+            </TabItem>
+        </TabControl>
+
+
     </Grid>
 </Window>

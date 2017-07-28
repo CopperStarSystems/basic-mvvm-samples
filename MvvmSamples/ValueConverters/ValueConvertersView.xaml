@@ -1,0 +1,64 @@
+﻿<UserControl x:Class="MvvmSamples.ValueConverters.ValueConvertersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:MvvmSamples.ValueConverters"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <local:BooleanToYesNoStringConverter x:Key="BooleanToYesNoStringConverter" />
+        <local:BooleanToIntegerConverter x:Key="BooleanToIntegerConverter"/>
+        <local:StringToUppercaseConverter x:Key="StringToUppercaseConverter"/>
+        <local:StringToSortedCharactersConverter x:Key="StringToSortedCharactersConverter"/>
+    </UserControl.Resources>
+    <StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Raw Value" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="YesNoStringConverter" />
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="IntegerConverter" />
+
+            <CheckBox Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left" IsChecked="{Binding CheckboxChecked}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CheckboxChecked}" />
+            <TextBlock Grid.Row="1" Grid.Column="2"
+                       Text="{Binding CheckboxChecked, Converter={StaticResource BooleanToYesNoStringConverter}}" />
+            <TextBlock Grid.Row="1" Grid.Column="3"
+                       Text="{Binding CheckboxChecked, Converter={StaticResource BooleanToIntegerConverter}}" />
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Raw Value" />
+            <TextBlock Grid.Row="0" Grid.Column="2" Text="UppercaseStringConverter" />
+            <TextBlock Grid.Row="0" Grid.Column="3" Text="SortedCharactersConverter" />
+
+            <TextBox Grid.Row="1" Grid.Column="0" DockPanel.Dock="Left" Text="{Binding UpperLowerCaseExample,UpdateSourceTrigger=PropertyChanged}" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UpperLowerCaseExample}" />
+            <TextBlock Grid.Row="1" Grid.Column="2"
+                       Text="{Binding UpperLowerCaseExample, Converter={StaticResource StringToUppercaseConverter}}" />
+            <TextBlock Grid.Row="1" Grid.Column="3"
+                       Text="{Binding UpperLowerCaseExample, Converter={StaticResource StringToSortedCharactersConverter}}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

@@ -3,9 +3,12 @@
 // 2017/07/19
 //  --------------------------------------------------------------------------------------
 
-using System.Windows.Input;
+using MvvmSamples.Command;
 using MvvmSamples.Core;
-using MvvmSamples.ViewModel.Command;
+using MvvmSamples.DataBinding;
+using MvvmSamples.DataTemplating;
+using MvvmSamples.ListDataBinding;
+using MvvmSamples.ValueConverters;
 
 namespace MvvmSamples.ViewModel
 {
@@ -14,9 +17,21 @@ namespace MvvmSamples.ViewModel
     {
         public MainViewModel()
         {
-            ShowDataBindingViewCommand = new ShowDataBindingViewCommand();
+            DataBindingViewModel = new DataBindingViewModel();
+            DataTemplatingViewModel = new DataTemplatingViewModel();
+            CommandViewModel = new CommandViewModel();
+            ValueConvertersViewModel = new ValueConvertersViewModel();
+            ListDataBindingViewModel = new ListDataBindingViewModel();
         }
 
-        public ICommand ShowDataBindingViewCommand { get; }
+        public CommandViewModel CommandViewModel { get; }
+
+        public DataBindingViewModel DataBindingViewModel { get; }
+
+        public DataTemplatingViewModel DataTemplatingViewModel { get; }
+
+        public ValueConvertersViewModel ValueConvertersViewModel { get; }
+
+        public ListDataBindingViewModel ListDataBindingViewModel { get; }
     }
 }
